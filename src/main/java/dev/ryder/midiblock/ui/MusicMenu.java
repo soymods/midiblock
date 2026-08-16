@@ -1,11 +1,14 @@
 package dev.ryder.midiblock.ui;
 
 import dev.ryder.midiblock.MidiBlockPlugin;
+import dev.ryder.midiblock.jukebox.JukeboxService;
 import dev.ryder.midiblock.library.Song;
 import dev.ryder.midiblock.library.SongLibrary;
 import dev.ryder.midiblock.playback.PlaybackService;
 import dev.ryder.midiblock.profile.PlayerSettingsStore;
 import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +21,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** A purpose-built, click-wheel-inspired inventory player. */
 public final class MusicMenu implements Listener {
@@ -28,6 +33,8 @@ public final class MusicMenu implements Listener {
     private final SongLibrary library;
     private final PlaybackService playback;
     private final PlayerSettingsStore settings;
+    private final Map<java.util.UUID, JukeboxContext> jukeboxContexts = new HashMap<>();
+    private JukeboxService jukeboxes;
 
     public MusicMenu(MidiBlockPlugin plugin, SongLibrary library, PlaybackService playback, PlayerSettingsStore settings) {
         this.plugin = plugin;
@@ -38,7 +45,17 @@ public final class MusicMenu implements Listener {
     }
 
     public void open(Player player, int ignored) {
+        jukeboxContexts.remove(player.getUniqueId());
         openHome(player);
+    }
+
+    public void setJukeboxes(JukeboxService jukeboxes) {
+        this.jukeboxes = jukeboxes;
+    }
+
+    public void openJukebox(Player player, Location location, int radius) {
+        jukeboxContexts.put(player.getUniqueId(), new JukeboxContext(location, radius));
+        openLibrary(player, 0);
     }
 
     private void openHome(Player player) {
@@ -46,6 +63,7 @@ public final class MusicMenu implements Listener {
         inventory.setItem(20, item(Material.JUKEBOX, ChatColor.GREEN + "Now Playing", List.of(ChatColor.GRAY + "See song progress and controls")));
         inventory.setItem(22, item(Material.MUSIC_DISC_CAT, ChatColor.WHITE + "Music", List.of(ChatColor.GRAY + String.valueOf(library.songs().size()) + " songs in your library")));
         inventory.setItem(24, item(Material.COMPARATOR, ChatColor.AQUA + "Settings", List.of(ChatColor.GRAY + "Volume and player preferences")));
+        inventory.setItem(26, item(Material.JUKEBOX, ChatColor.RED + "" + ChatColor.BOLD + "JUKEBOX", List.of(ChatColor.GRAY + "Get a permanent public music player")));
         inventory.setItem(49, item(Material.COMPASS, ChatColor.GOLD + "MENU"));
         player.openInventory(inventory);
     }
@@ -137,6 +155,7 @@ public final class MusicMenu implements Listener {
         if (slot == 20) openNowPlaying(player);
         else if (slot == 22) openLibrary(player, 0);
         else if (slot == 24) openSettings(player);
+        else if (slot == 26 && jukeboxes != null) jukeboxes.give(player);
     }
 
     private void clickLibrary(Player player, int page, int slot, boolean shiftClick) {
@@ -145,7 +164,9 @@ public final class MusicMenu implements Listener {
             int index = page * PAGE_SIZE + slot;
             if (index >= songs.size()) return;
             Song song = songs.get(index);
-            if (shiftClick) {
+            if (jukeboxContexts.containsKey(player.getUniqueId())) {
+                play(player, song);
+            } else if (shiftClick) {
                 playback.queue(player, song);
                 player.sendMessage(ChatColor.AQUA + "Queued: " + ChatColor.WHITE + song.displayName());
             } else play(player, song);
@@ -185,6 +206,21 @@ public final class MusicMenu implements Listener {
     }
 
     private void play(Player player, Song song) {
+        JukeboxContext context = jukeboxContexts.get(player.getUniqueId());
+        if (context != null) {
+            List<Player> listeners = new ArrayList<>();
+            for (Player target : Bukkit.getOnlinePlayers()) {
+                if (target.getWorld().equals(context.location.getWorld()) && target.getLocation().distanceSquared(context.location) <= context.radius * context.radius) {
+                    listeners.add(target);
+                }
+            }
+            for (Player listener : listeners) {
+                playback.play(listener, song, settings.volume(listener));
+                settings.recordPlayed(listener, song.id());
+            }
+            player.sendMessage(ChatColor.RED + "JUKEBOX" + ChatColor.GRAY + " playing " + ChatColor.WHITE + song.displayName() + ChatColor.GRAY + " for " + listeners.size() + " listener(s) within " + context.radius + " blocks.");
+            return;
+        }
         PlaybackService.StartResult result = playback.play(player, song, settings.volume(player));
         player.sendMessage(result == PlaybackService.StartResult.STARTED
             ? ChatColor.GREEN + "Now playing: " + ChatColor.WHITE + song.displayName()
@@ -225,6 +261,9 @@ public final class MusicMenu implements Listener {
     }
 
     private enum Page { HOME, LIBRARY, NOW_PLAYING, SETTINGS }
+
+    private record JukeboxContext(Location location, int radius) {
+    }
 
     private static final class PlayerMenuHolder implements InventoryHolder {
         private final Page page;

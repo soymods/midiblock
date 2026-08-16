@@ -5,6 +5,9 @@ playback:
   max-voices-per-player: 48
   # Hard cap on MIDI controller/note events handled for one player in a server tick.
   max-events-per-tick: 512
+  # After a serious lag spike, quietly discard stale soft accompaniment rather than burst it late.
+  late-drop-threshold-millis: 150
+  late-drop-velocity-threshold: 72
   trailing-silence-millis: 1000
   pitch-bend-range-semitones: 2.0
   # Native note blocks cannot truly sustain. This gently re-triggers held notes while pedal is down.
@@ -19,7 +22,7 @@ library:
 
 # Cache files are automatic and safe to delete; they are rebuilt from source MIDI files.
 compiler:
-  cache-format: MBC2
+  cache-format: MBC3
 
 # Optional per-song overrides live alongside the MIDI as <song>.song.yml.
 # channels are zero-based MIDI channel numbers; channel 9 is percussion.
@@ -33,6 +36,9 @@ compiler:
 ui:
   title: "MidiBlock"
   songs-per-page: 45
+
+jukebox:
+  default-radius: 50
 
 # Optional high-fidelity layer. Keep disabled until the pack ZIP is hosted over HTTP(S).
 # Players who decline always receive the native note-block arrangement instead.

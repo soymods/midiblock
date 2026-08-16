@@ -39,13 +39,15 @@ public final class PlaybackService {
     private final long sustainRefreshMicros;
     private final EnhancedAudioService enhancedAudio;
     private final int maxEventsPerTick;
+    private final long lateDropThresholdMicros;
+    private final int lateDropVelocityThreshold;
     private final ArrangementCompiler arrangementCompiler = new ArrangementCompiler();
     private final Map<UUID, PlaybackSession> sessions = new HashMap<>();
     private final Map<UUID, Long> requests = new HashMap<>();
     private final Map<UUID, ArrayDeque<Song>> queues = new HashMap<>();
     private long requestSequence;
 
-    public PlaybackService(Plugin plugin, MidiCompiler compiler, Executor compilerExecutor, long trailingSilenceMicros, int maxVoices, float pitchBendRange, long sustainRefreshMicros, int maxEventsPerTick, EnhancedAudioService enhancedAudio) {
+    public PlaybackService(Plugin plugin, MidiCompiler compiler, Executor compilerExecutor, long trailingSilenceMicros, int maxVoices, float pitchBendRange, long sustainRefreshMicros, int maxEventsPerTick, long lateDropThresholdMicros, int lateDropVelocityThreshold, EnhancedAudioService enhancedAudio) {
         this.plugin = plugin;
         this.compiler = compiler;
         this.compilerExecutor = compilerExecutor;
@@ -55,6 +57,8 @@ public final class PlaybackService {
         this.sustainRefreshMicros = sustainRefreshMicros;
         this.enhancedAudio = enhancedAudio;
         this.maxEventsPerTick = maxEventsPerTick;
+        this.lateDropThresholdMicros = lateDropThresholdMicros;
+        this.lateDropVelocityThreshold = lateDropVelocityThreshold;
     }
 
     /** Starts immediately when compiled, otherwise queues a background compilation. */
@@ -229,7 +233,12 @@ public final class PlaybackService {
             if (controlTime <= noteTime) {
                 applyControl(session, controls.get(session.nextControl++));
             } else {
-                emitNote(player, session, notes.get(session.nextNote++), 1.0F);
+                PlayableNote note = notes.get(session.nextNote++);
+                if (elapsed - note.timeMicros() > lateDropThresholdMicros && !note.percussion() && note.velocity() < lateDropVelocityThreshold) {
+                    session.droppedNotes++;
+                } else {
+                    emitNote(player, session, note, 1.0F);
+                }
             }
         }
     }
@@ -269,6 +278,7 @@ public final class PlaybackService {
     private void applyControl(PlaybackSession session, MidiControlEvent control) {
         switch (control.type()) {
             case PITCH_BEND -> session.pitchBend[control.channel()] = control.value();
+            case PITCH_BEND_RANGE -> session.pitchBendRange[control.channel()] = control.value();
             case CHANNEL_VOLUME -> session.channelVolume[control.channel()] = control.value() / 127.0F;
             case EXPRESSION -> session.expression[control.channel()] = control.value() / 127.0F;
             case SUSTAIN -> session.sustain[control.channel()] = control.value() >= 64;
@@ -293,7 +303,7 @@ public final class PlaybackService {
     }
 
     private float bendSemitones(PlaybackSession session, int channel) {
-        return ((session.pitchBend[channel] - 8192) / 8192.0F) * pitchBendRange;
+        return ((session.pitchBend[channel] - 8192) / 8192.0F) * session.pitchBendRange[channel];
     }
 
     private long elapsedMicros(PlaybackSession session) {
@@ -320,7 +330,7 @@ public final class PlaybackService {
     public record PlayingSong(Song song, float volume, boolean paused, long positionMicros, long durationMicros, int droppedNotes) {
     }
 
-    private static final class PlaybackSession {
+    private final class PlaybackSession {
         private final Song song;
         private final NoteBlockArrangement arrangement;
         private float volume;
@@ -333,6 +343,7 @@ public final class PlaybackService {
         private BukkitTask task;
         private int droppedNotes;
         private final int[] pitchBend = new int[16];
+        private final float[] pitchBendRange = new float[16];
         private final float[] channelVolume = new float[16];
         private final float[] expression = new float[16];
         private final boolean[] sustain = new boolean[16];
@@ -345,6 +356,7 @@ public final class PlaybackService {
             this.requestId = requestId;
             this.positionMicros = positionMicros;
             java.util.Arrays.fill(pitchBend, 8192);
+            java.util.Arrays.fill(pitchBendRange, PlaybackService.this.pitchBendRange);
             java.util.Arrays.fill(channelVolume, 100.0F / 127.0F);
             java.util.Arrays.fill(expression, 1.0F);
         }

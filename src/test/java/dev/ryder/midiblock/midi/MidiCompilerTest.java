@@ -30,6 +30,9 @@ final class MidiCompilerTest {
         track.add(new MidiEvent(tempo(500_000), 0));
         track.add(new MidiEvent(program(40), 0));
         track.add(new MidiEvent(control(7, 80), 0));
+        track.add(new MidiEvent(control(101, 0), 0));
+        track.add(new MidiEvent(control(100, 0), 0));
+        track.add(new MidiEvent(control(6, 12), 0));
         track.add(new MidiEvent(note(60, 100), 0));
         track.add(new MidiEvent(pitchBend(10_240), 120));
         track.add(new MidiEvent(noteOff(60), 240));
@@ -48,9 +51,11 @@ final class MidiCompilerTest {
         assertEquals(1_500_000L, first.notes().get(1).timeMicros());
         assertEquals(250_000L, first.notes().get(0).endTimeMicros());
         assertEquals(40, first.notes().get(0).program());
-        assertEquals(3, first.controls().size());
-        assertEquals(MidiControlEvent.Type.PITCH_BEND, first.controls().get(1).type());
-        assertEquals(10_240, first.controls().get(1).value());
+        assertEquals(4, first.controls().size());
+        assertEquals(MidiControlEvent.Type.PITCH_BEND_RANGE, first.controls().get(1).type());
+        assertEquals(12, first.controls().get(1).value());
+        assertEquals(MidiControlEvent.Type.PITCH_BEND, first.controls().get(2).type());
+        assertEquals(10_240, first.controls().get(2).value());
         assertEquals(first, cached);
         try (var files = Files.list(temporaryDirectory.resolve("cache"))) {
             assertTrue(files.anyMatch(path -> path.getFileName().toString().endsWith(".mbc")));

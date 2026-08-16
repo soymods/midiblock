@@ -47,6 +47,7 @@ The current plugin includes:
 - Songs are read from `plugins/MidiBlock/songs/`, including nested folders.
 - Player profiles persist recently played tracks and named playlists in `plugins/MidiBlock/players.yml`.
 - Share music with yourself, a selected player, everyone in a radius, or the whole server through permission-gated commands.
+- Place a bold red **JUKEBOX** to create a persistent public player; right-click it to open the Music Library and broadcast songs from that block to listeners in its configured radius.
 
 ### Enhanced Audio
 
@@ -64,6 +65,7 @@ The current plugin includes:
 /music play <song> global      Play for everyone (permission required)
 /music pause | resume | stop
 /music volume <0-100>
+/music jukebox                 Receive a permanent public JUKEBOX
 /music history
 /music playlist list|create|add|play|delete
 /music analyze <song>
@@ -154,7 +156,7 @@ The test suite covers MIDI tempo conversion, note releases, program changes, con
 | Supported Minecraft Versions | `1.21 - 1.21.11`, `26.1 - 26.2` |
 | Paper API Baseline | `1.21` |
 | Java | `21` for 1.21.x; `25` runtime for 26.x |
-| Cache Format | `MBC2` |
+| Cache Format | `MBC3` |
 
 ## Operations And Safety
 

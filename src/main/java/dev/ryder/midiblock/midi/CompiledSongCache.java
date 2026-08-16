@@ -15,7 +15,7 @@ import java.util.List;
 /** A small, versioned binary cache. It never serializes Java objects. */
 final class CompiledSongCache {
     private static final int MAGIC = 0x4D424331; // MBC1
-    private static final int SCHEMA_VERSION = 2;
+    private static final int SCHEMA_VERSION = 3;
 
     CompiledSong read(Path path) throws IOException {
         try (DataInputStream input = new DataInputStream(new BufferedInputStream(Files.newInputStream(path)))) {

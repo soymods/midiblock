@@ -3,6 +3,7 @@ package dev.ryder.midiblock.command;
 import dev.ryder.midiblock.MidiBlockPlugin;
 import dev.ryder.midiblock.enhanced.EnhancedAudioService;
 import dev.ryder.midiblock.library.Song;
+import dev.ryder.midiblock.jukebox.JukeboxService;
 import dev.ryder.midiblock.library.SongLibrary;
 import dev.ryder.midiblock.playback.PlaybackService;
 import dev.ryder.midiblock.profile.PlayerSettingsStore;
@@ -22,21 +23,23 @@ import java.util.List;
 import java.util.Locale;
 
 public final class MusicCommand implements CommandExecutor, TabCompleter {
-    private static final List<String> SUBCOMMANDS = List.of("list", "play", "stop", "pause", "resume", "volume", "pack", "history", "playlist", "analyze", "reload");
+    private static final List<String> SUBCOMMANDS = List.of("list", "play", "stop", "pause", "resume", "volume", "jukebox", "pack", "history", "playlist", "analyze", "reload");
 
     private final MidiBlockPlugin plugin;
     private final SongLibrary library;
     private final PlaybackService playback;
     private final PlayerSettingsStore settings;
     private final EnhancedAudioService enhancedAudio;
+    private final JukeboxService jukeboxes;
     private final MusicMenu menu;
 
-    public MusicCommand(MidiBlockPlugin plugin, SongLibrary library, PlaybackService playback, PlayerSettingsStore settings, EnhancedAudioService enhancedAudio, MusicMenu menu) {
+    public MusicCommand(MidiBlockPlugin plugin, SongLibrary library, PlaybackService playback, PlayerSettingsStore settings, EnhancedAudioService enhancedAudio, JukeboxService jukeboxes, MusicMenu menu) {
         this.plugin = plugin;
         this.library = library;
         this.playback = playback;
         this.settings = settings;
         this.enhancedAudio = enhancedAudio;
+        this.jukeboxes = jukeboxes;
         this.menu = menu;
     }
 
@@ -66,6 +69,7 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
             case "resume" -> player.sendMessage(playback.resume(player) ? ChatColor.GREEN + "Playback resumed." : ChatColor.RED + "Nothing is paused.");
             case "volume" -> setVolume(player, args);
             case "pack" -> requestPack(player);
+            case "jukebox" -> jukeboxes.give(player);
             case "history" -> history(player);
             case "playlist" -> playlist(player, args);
             case "analyze" -> analyze(player, args);

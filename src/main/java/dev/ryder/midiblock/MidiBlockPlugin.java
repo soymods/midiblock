@@ -3,6 +3,7 @@ package dev.ryder.midiblock;
 import dev.ryder.midiblock.command.MusicCommand;
 import dev.ryder.midiblock.enhanced.EnhancedAudioService;
 import dev.ryder.midiblock.library.SongLibrary;
+import dev.ryder.midiblock.jukebox.JukeboxService;
 import dev.ryder.midiblock.midi.MidiCompiler;
 import dev.ryder.midiblock.playback.PlaybackService;
 import dev.ryder.midiblock.profile.PlayerSettingsStore;
@@ -40,17 +41,22 @@ public final class MidiBlockPlugin extends JavaPlugin {
         float bendRange = (float) getConfig().getDouble("playback.pitch-bend-range-semitones", 2.0D);
         long sustainRefreshMicros = getConfig().getLong("playback.sustain-refresh-millis", 350L) * 1_000L;
         int maxEventsPerTick = Math.max(1, getConfig().getInt("playback.max-events-per-tick", 512));
+        long lateDropThresholdMicros = Math.max(0L, getConfig().getLong("playback.late-drop-threshold-millis", 150L) * 1_000L);
+        int lateDropVelocityThreshold = Math.clamp(getConfig().getInt("playback.late-drop-velocity-threshold", 72), 0, 127);
         this.enhancedAudio = new EnhancedAudioService(this);
-        this.playbackService = new PlaybackService(this, midiCompiler, compilerExecutor, trailingSilenceMicros, maxVoices, bendRange, sustainRefreshMicros, maxEventsPerTick, enhancedAudio);
+        this.playbackService = new PlaybackService(this, midiCompiler, compilerExecutor, trailingSilenceMicros, maxVoices, bendRange, sustainRefreshMicros, maxEventsPerTick, lateDropThresholdMicros, lateDropVelocityThreshold, enhancedAudio);
         this.playerSettings = new PlayerSettingsStore(getDataFolder(), (float) getConfig().getDouble("playback.default-volume", 0.70D));
         warmLibrary();
 
         MusicMenu menu = new MusicMenu(this, songLibrary, playbackService, playerSettings);
+        JukeboxService jukeboxes = new JukeboxService(this, menu);
+        menu.setJukeboxes(jukeboxes);
         getServer().getPluginManager().registerEvents(menu, this);
+        getServer().getPluginManager().registerEvents(jukeboxes, this);
         getServer().getPluginManager().registerEvents(enhancedAudio, this);
 
         PluginCommand command = Objects.requireNonNull(getCommand("music"), "music command missing from plugin.yml");
-        MusicCommand musicCommand = new MusicCommand(this, songLibrary, playbackService, playerSettings, enhancedAudio, menu);
+        MusicCommand musicCommand = new MusicCommand(this, songLibrary, playbackService, playerSettings, enhancedAudio, jukeboxes, menu);
         command.setExecutor(musicCommand);
         command.setTabCompleter(musicCommand);
 
