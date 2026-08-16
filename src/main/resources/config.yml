@@ -19,7 +19,7 @@ library:
 
 # Cache files are automatic and safe to delete; they are rebuilt from source MIDI files.
 compiler:
-  cache-format: MBC1
+  cache-format: MBC2
 
 # Optional per-song overrides live alongside the MIDI as <song>.song.yml.
 # channels are zero-based MIDI channel numbers; channel 9 is percussion.
