@@ -72,7 +72,7 @@ The current plugin includes:
 /music play <song> global      Play for everyone (permission required)
 /music pause | resume | stop
 /music volume <0-100>
-/music jukebox                 Receive a permanent public JUKEBOX
+/music jukebox                 Receive a permanent public JUKEBOX (operator only)
 /music history
 /music playlist list|create|add|play|delete
 /music analyze <song>
@@ -101,7 +101,7 @@ MidiBlock stores runtime data inside the Paper plugins directory under `MidiBloc
 
 - `MidiBlock/config.yml`: playback, UI, limits, and enhanced-audio settings
 - `MidiBlock/songs/`: source MIDI library and optional `.song.yml` sidecars
-- `MidiBlock/cache/`: generated `MBC2` playback cache; safe to delete and rebuild
+- `MidiBlock/cache/`: generated `MBC3` playback cache; safe to delete and rebuild
 - `MidiBlock/players.yml`: per-player volume, history, and playlists
 
 ### Per-Song Arrangement Overrides
@@ -151,9 +151,10 @@ The release JAR is written to `build/libs/midiblock-0.1.0.jar`.
 ```bash
 gradle test
 gradle clean build
+gradle verifyReleaseArtifact
 ```
 
-The test suite covers MIDI tempo conversion, note releases, program changes, controller events, cache round-trips, and malformed source rejection.
+The test suite covers MIDI tempo conversion, note releases, program changes, controller events, cache round-trips, and malformed source rejection. `verifyReleaseArtifact` also checks the final JAR contains required metadata/resources, does not bundle Paper API classes, and targets Java 21 bytecode.
 
 ## Version Information
 
@@ -171,8 +172,13 @@ The test suite covers MIDI tempo conversion, note releases, program changes, con
 - Source MIDI files are capped at 32 MiB and cache writes are atomic.
 - `playback.max-events-per-tick` bounds work after lag spikes; `max-voices-per-player` protects listeners from dense chords.
 - `playback.timing` contains the server-side latency controls. The default 200 ms pre-roll and ping compensation are intentionally conservative; tune only after listening on the real server.
+- The permanent **JUKEBOX** creation button and `/music jukebox` are visible/available only to server operators. Placed jukeboxes remain public listeners for their configured radius.
 - Native note blocks cannot provide continuous pitch bends or true sustained samples. MidiBlock applies bend/volume to upcoming notes and uses gentle sustain refreshes as the closest native approximation.
 
 ## Support And Feedback
 
 For now, use the project repository's issue tracker for bugs, MIDI files that map poorly, and feature requests.
+
+## License
+
+MidiBlock is distributed under the custom **MidiBlock License (All Rights Reserved)** in [LICENSE.txt](LICENSE.txt).

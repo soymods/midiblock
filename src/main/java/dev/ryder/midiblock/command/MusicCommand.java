@@ -72,7 +72,7 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
             case "resume" -> player.sendMessage(playback.resume(player) ? ChatColor.GREEN + "Playback resumed." : ChatColor.RED + "Nothing is paused.");
             case "volume" -> setVolume(player, args);
             case "pack" -> requestPack(player);
-            case "jukebox" -> jukeboxes.give(player);
+            case "jukebox" -> giveJukebox(player);
             case "orchestra" -> orchestra(player, args);
             case "history" -> history(player);
             case "playlist" -> playlist(player, args);
@@ -176,6 +176,14 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
     private void requestPack(Player player) {
         if (enhancedAudio.request(player)) player.sendMessage(ChatColor.AQUA + "Requested the MidiBlock enhanced audio pack.");
         else player.sendMessage(ChatColor.YELLOW + "Enhanced audio is not configured on this server; native note-block audio is active.");
+    }
+
+    private void giveJukebox(Player player) {
+        if (!player.isOp()) {
+            player.sendMessage(ChatColor.RED + "Only server operators can create permanent JUKEBOX players.");
+            return;
+        }
+        jukeboxes.give(player);
     }
 
     private void orchestra(Player player, String[] args) {
@@ -301,7 +309,10 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (args.length == 1) return filter(SUBCOMMANDS, args[0]);
+        if (args.length == 1) {
+            List<String> visible = sender.isOp() ? SUBCOMMANDS : SUBCOMMANDS.stream().filter(subcommand -> !subcommand.equals("jukebox")).toList();
+            return filter(visible, args[0]);
+        }
         if (args.length == 2 && args[0].equalsIgnoreCase("play")) {
             return filter(library.songs().stream().map(Song::id).toList(), args[1]);
         }
