@@ -1,4 +1,4 @@
-MidiBlock License (All Rights Reserved)
+MidiBox License (All Rights Reserved)
 
 Copyright (c) Ryder 2026
 
@@ -15,9 +15,9 @@ You are allowed to include this plugin in modpacks, server packs, and managed se
 
 Only monetization of the pack or server distribution through CurseForge or Modrinth is allowed, unless you have received written permission from me to monetize it elsewhere.
 
-If the pack or server distribution is distributed outside of CurseForge and Modrinth, you must credit the MidiBlock project by providing an easily accessible link to one of my official project pages.
+If the pack or server distribution is distributed outside of CurseForge and Modrinth, you must credit the MidiBox project by providing an easily accessible link to one of my official project pages.
 
-The name or description of the pack or server distribution must not be easily confused with the names or descriptions of MidiBlock or my other projects.
+The name or description of the pack or server distribution must not be easily confused with the names or descriptions of MidiBox or my other projects.
 
 If I have given you written permission to monetize the pack or server distribution outside CurseForge and Modrinth, and I later request that you stop, you must comply and remove monetization outside those platforms.
 

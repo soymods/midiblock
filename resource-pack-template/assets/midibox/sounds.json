@@ -1,0 +1,17 @@
+{
+  "instruments.piano": { "sounds": ["midibox:instruments/piano"] },
+  "instruments.mallet": { "sounds": ["midibox:instruments/mallet"] },
+  "instruments.organ": { "sounds": ["midibox:instruments/organ"] },
+  "instruments.guitar": { "sounds": ["midibox:instruments/guitar"] },
+  "instruments.bass": { "sounds": ["midibox:instruments/bass"] },
+  "instruments.strings": { "sounds": ["midibox:instruments/strings"] },
+  "instruments.brass": { "sounds": ["midibox:instruments/brass"] },
+  "instruments.wind": { "sounds": ["midibox:instruments/wind"] },
+  "instruments.synth": { "sounds": ["midibox:instruments/synth"] },
+  "instruments.texture": { "sounds": ["midibox:instruments/texture"] },
+  "percussion.kick": { "sounds": ["midibox:percussion/kick"] },
+  "percussion.snare": { "sounds": ["midibox:percussion/snare"] },
+  "percussion.hat": { "sounds": ["midibox:percussion/hat"] },
+  "percussion.crash": { "sounds": ["midibox:percussion/crash"] },
+  "percussion.percussion": { "sounds": ["midibox:percussion/percussion"] }
+}

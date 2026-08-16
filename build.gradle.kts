@@ -8,7 +8,7 @@ group = "dev.ryder"
 version = "0.1.0"
 
 base {
-    archivesName.set("midiblock")
+    archivesName.set("midibox")
 }
 
 repositories {
@@ -49,9 +49,9 @@ tasks {
     jar {
         manifest {
             attributes(
-                "Implementation-Title" to "MidiBlock",
+                "Implementation-Title" to "MidiBox",
                 "Implementation-Version" to project.version,
-                "MidiBlock-Supported-Minecraft" to "1.21.x, 26.1-26.2",
+                "MidiBox-Supported-Minecraft" to "1.21.x, 26.1-26.2",
             )
         }
     }

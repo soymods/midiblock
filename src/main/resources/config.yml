@@ -1,5 +1,5 @@
-# MidiBlock keeps original .mid/.midi source files in plugins/MidiBlock/songs.
-# Compiled playback plans will eventually be stored in plugins/MidiBlock/cache.
+# MidiBox keeps original .mid/.midi source files in plugins/MidiBox/songs.
+# Compiled playback plans will eventually be stored in plugins/MidiBox/cache.
 playback:
   default-volume: 0.70
   max-voices-per-player: 48
@@ -45,7 +45,7 @@ compiler:
 #     sound: GUITAR
 
 ui:
-  title: "MidiBlock"
+  title: "MidiBox"
   songs-per-page: 45
 
 jukebox:
@@ -60,4 +60,4 @@ enhanced-audio:
   resource-pack:
     url: ""
     sha1: ""
-    prompt: "MidiBlock offers an optional high-fidelity instrument pack."
+    prompt: "MidiBox offers an optional high-fidelity instrument pack."

@@ -1,6 +1,6 @@
 <div align="center">
 
-# MidiBlock
+# MidiBox
 
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.21.x%20%7C%2026.1--26.2-00AA00?style=for-the-badge&logo=minecraft)](https://minecraft.net)
 [![Paper](https://img.shields.io/badge/Paper-1.21%2B-FFFFFF?style=for-the-badge)](https://papermc.io)
@@ -13,9 +13,9 @@ Created by `Ryder`.
 
 </div>
 
-## What MidiBlock Is
+## What MidiBox Is
 
-MidiBlock turns Standard MIDI files into a shared Minecraft listening experience. It reads MIDI timing, tempo changes, instruments, percussion, velocity, pitch bend, sustain, and channel controls; translates them into a native note-block arrangement; and gives players an iPod-inspired in-game music player.
+MidiBox turns Standard MIDI files into a shared Minecraft listening experience. It reads MIDI timing, tempo changes, instruments, percussion, velocity, pitch bend, sustain, and channel controls; translates them into a native note-block arrangement; and gives players an iPod-inspired in-game music player.
 
 The current plugin includes:
 
@@ -45,15 +45,15 @@ The current plugin includes:
 
 ### Library, Playlists, And Sharing
 
-- Songs are read from `plugins/MidiBlock/songs/`, including nested folders.
-- Player profiles persist recently played tracks and named playlists in `plugins/MidiBlock/players.yml`.
+- Songs are read from `plugins/MidiBox/songs/`, including nested folders.
+- Player profiles persist recently played tracks and named playlists in `plugins/MidiBox/players.yml`.
 - Share music with yourself, a selected player, everyone in a radius, or the whole server through permission-gated commands.
-- Place a bold red **JUKEBOX** to create a persistent public player; right-click it to open the Music Library and broadcast songs from that block to listeners in its configured radius.
+- Place a bold red **JUKEBOX** to create a persistent public player; right-click it to open the Music Library. It owns one shared song timeline: listeners entering its configured radius join at the current position, and listeners leaving the radius stop hearing it. The footer provides an operator-only public/operator access toggle and a shared repeat toggle; shift-click a song to queue it for everyone nearby.
 
 ### Enhanced Audio
 
 - Vanilla listeners always receive a complete native note-block arrangement.
-- Players who accept the configured enhanced-audio pack receive custom `midiblock:` instrument and percussion sounds instead.
+- Players who accept the configured enhanced-audio pack receive custom `midibox:` instrument and percussion sounds instead.
 - The resource-pack template defines the sample layout without bundling unlicensed audio assets.
 
 ### Vanilla Orchestra
@@ -90,19 +90,19 @@ The current plugin includes:
 ### Steps
 
 1. Build the plugin with `gradle build`.
-2. Copy `build/libs/midiblock-0.1.0.jar` into the Paper server's `plugins/` directory.
-3. Start Paper once so it creates `plugins/MidiBlock/`.
-4. Add `.mid` or `.midi` files under `plugins/MidiBlock/songs/`.
+2. Copy `build/libs/midibox-0.1.0.jar` into the Paper server's `plugins/` directory.
+3. Start Paper once so it creates `plugins/MidiBox/`.
+4. Add `.mid` or `.midi` files under `plugins/MidiBox/songs/`.
 5. Run `/music reload`, then `/music` in game.
 
 ## Plugin Files
 
-MidiBlock stores runtime data inside the Paper plugins directory under `MidiBlock/`.
+MidiBox stores runtime data inside the Paper plugins directory under `MidiBox/`.
 
-- `MidiBlock/config.yml`: playback, UI, limits, and enhanced-audio settings
-- `MidiBlock/songs/`: source MIDI library and optional `.song.yml` sidecars
-- `MidiBlock/cache/`: generated `MBC3` playback cache; safe to delete and rebuild
-- `MidiBlock/players.yml`: per-player volume, history, and playlists
+- `MidiBox/config.yml`: playback, UI, limits, and enhanced-audio settings
+- `MidiBox/songs/`: source MIDI library and optional `.song.yml` sidecars
+- `MidiBox/cache/`: generated `MBC3` playback cache; safe to delete and rebuild
+- `MidiBox/players.yml`: per-player volume, history, and playlists
 
 ### Per-Song Arrangement Overrides
 
@@ -125,7 +125,7 @@ Use [resource-pack-template/README.md](resource-pack-template/README.md) as the 
 1. Add appropriately licensed `.ogg` samples to the template's instrument and percussion paths.
 2. Zip the **contents** of the template folder and host the ZIP over HTTPS.
 3. Calculate the ZIP's SHA-1.
-4. Set `enhanced-audio.enabled`, `resource-pack.url`, and `resource-pack.sha1` in `MidiBlock/config.yml`.
+4. Set `enhanced-audio.enabled`, `resource-pack.url`, and `resource-pack.sha1` in `MidiBox/config.yml`.
 
 Players who decline an optional pack automatically remain on native note-block audio.
 
@@ -144,7 +144,7 @@ Players who decline an optional pack automatically remain on native note-block a
 gradle clean build
 ```
 
-The release JAR is written to `build/libs/midiblock-0.1.0.jar`.
+The release JAR is written to `build/libs/midibox-0.1.0.jar`.
 
 ### Verification
 
@@ -173,7 +173,7 @@ The test suite covers MIDI tempo conversion, note releases, program changes, con
 - `playback.max-events-per-tick` bounds work after lag spikes; `max-voices-per-player` protects listeners from dense chords.
 - `playback.timing` contains the server-side latency controls. The default 200 ms pre-roll and ping compensation are intentionally conservative; tune only after listening on the real server.
 - The permanent **JUKEBOX** creation button and `/music jukebox` are visible/available only to server operators. Placed jukeboxes remain public listeners for their configured radius.
-- Native note blocks cannot provide continuous pitch bends or true sustained samples. MidiBlock applies bend/volume to upcoming notes and uses gentle sustain refreshes as the closest native approximation.
+- Native note blocks cannot provide continuous pitch bends or true sustained samples. MidiBox applies bend/volume to upcoming notes and uses gentle sustain refreshes as the closest native approximation.
 
 ## Support And Feedback
 
@@ -181,4 +181,4 @@ For now, use the project repository's issue tracker for bugs, MIDI files that ma
 
 ## License
 
-MidiBlock is distributed under the custom **MidiBlock License (All Rights Reserved)** in [LICENSE.txt](LICENSE.txt).
+MidiBox is distributed under the custom **MidiBox License (All Rights Reserved)** in [LICENSE.txt](LICENSE.txt).

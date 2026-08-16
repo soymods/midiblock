@@ -1,2 +1,2 @@
-rootProject.name = "midiblock"
+rootProject.name = "midibox"
 
