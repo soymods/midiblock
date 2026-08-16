@@ -31,8 +31,9 @@ The current plugin includes:
 ### Playback And Accuracy
 
 - Uses MIDI tempo maps and an absolute monotonic playback clock instead of a simple tick counter.
+- Uses a configurable pre-roll, one-tick outbound look-ahead, and bounded per-player ping compensation, so sound packets leave the server before their intended beat without changing the shared song clock.
 - Supports program changes, channel volume, expression, pitch bend, percussion, and sustain-pedal approximation.
-- Protects clients and the server with configurable voice and per-tick event limits.
+- Batches simultaneous chords in musical-priority order and adaptively sheds soft accompaniment/sustain refreshes before drums, bass attacks, or strong melody notes when a server tick is late.
 - Runs `/music analyze <song>` to report octave shifts and notes that needed native range clamping.
 
 ### iPod-Style Player
@@ -169,6 +170,7 @@ The test suite covers MIDI tempo conversion, note releases, program changes, con
 - MIDI compilation uses a worker thread; Bukkit sound calls stay on the server thread.
 - Source MIDI files are capped at 32 MiB and cache writes are atomic.
 - `playback.max-events-per-tick` bounds work after lag spikes; `max-voices-per-player` protects listeners from dense chords.
+- `playback.timing` contains the server-side latency controls. The default 200 ms pre-roll and ping compensation are intentionally conservative; tune only after listening on the real server.
 - Native note blocks cannot provide continuous pitch bends or true sustained samples. MidiBlock applies bend/volume to upcoming notes and uses gentle sustain refreshes as the closest native approximation.
 
 ## Support And Feedback

@@ -45,10 +45,16 @@ public final class MidiBlockPlugin extends JavaPlugin {
         int maxEventsPerTick = Math.max(1, getConfig().getInt("playback.max-events-per-tick", 512));
         long lateDropThresholdMicros = Math.max(0L, getConfig().getLong("playback.late-drop-threshold-millis", 150L) * 1_000L);
         int lateDropVelocityThreshold = Math.clamp(getConfig().getInt("playback.late-drop-velocity-threshold", 72), 0, 127);
+        long preRollMicros = Math.max(0L, getConfig().getLong("playback.timing.pre-roll-millis", 200L) * 1_000L);
+        long outboundLookaheadMicros = Math.max(0L, getConfig().getLong("playback.timing.outbound-lookahead-millis", 50L) * 1_000L);
+        boolean pingCompensation = getConfig().getBoolean("playback.timing.ping-compensation", true);
+        long maxPingCompensationMicros = Math.max(0L, getConfig().getLong("playback.timing.max-ping-compensation-millis", 150L) * 1_000L);
+        boolean adaptiveQuality = getConfig().getBoolean("playback.timing.adaptive-quality", true);
+        long adaptiveLagThresholdMicros = Math.max(1L, getConfig().getLong("playback.timing.adaptive-lag-threshold-millis", 100L) * 1_000L);
         saveResource("sound-profiles/1.21.4.yml", false);
         this.orchestra = OrchestraProfile.load(new java.io.File(getDataFolder(), "sound-profiles/1.21.4.yml"));
         this.enhancedAudio = new EnhancedAudioService(this);
-        this.playbackService = new PlaybackService(this, midiCompiler, compilerExecutor, trailingSilenceMicros, maxVoices, bendRange, sustainRefreshMicros, maxEventsPerTick, lateDropThresholdMicros, lateDropVelocityThreshold, enhancedAudio, orchestra);
+        this.playbackService = new PlaybackService(this, midiCompiler, compilerExecutor, trailingSilenceMicros, maxVoices, bendRange, sustainRefreshMicros, maxEventsPerTick, lateDropThresholdMicros, lateDropVelocityThreshold, preRollMicros, outboundLookaheadMicros, pingCompensation, maxPingCompensationMicros, adaptiveQuality, adaptiveLagThresholdMicros, enhancedAudio, orchestra);
         this.playerSettings = new PlayerSettingsStore(getDataFolder(), (float) getConfig().getDouble("playback.default-volume", 0.70D));
         warmLibrary();
 

@@ -15,6 +15,17 @@ playback:
   # Native Minecraft playback is server-tick-bound (20 Hz).
   # Future enhanced playback can use the same compiled song plan.
   mode: NOTE_BLOCK_AUTHENTIC
+  timing:
+    # Keeps the start of a song off the network's critical path. This is not audible silence.
+    pre-roll-millis: 200
+    # One tick of packet look-ahead prevents the scheduler boundary from making attacks arrive late.
+    outbound-lookahead-millis: 50
+    # Dispatches each player's notes about one half round-trip ping early, while retaining one shared song clock.
+    ping-compensation: true
+    max-ping-compensation-millis: 150
+    # When the server falls behind, preserve drums, bass attacks, and strong melody notes first.
+    adaptive-quality: true
+    adaptive-lag-threshold-millis: 100
 
 library:
   recursive-folders: true

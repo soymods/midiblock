@@ -42,13 +42,19 @@ public final class PlaybackService {
     private final int maxEventsPerTick;
     private final long lateDropThresholdMicros;
     private final int lateDropVelocityThreshold;
+    private final long preRollMicros;
+    private final long outboundLookaheadMicros;
+    private final boolean pingCompensation;
+    private final long maxPingCompensationMicros;
+    private final boolean adaptiveQuality;
+    private final long adaptiveLagThresholdMicros;
     private final ArrangementCompiler arrangementCompiler;
     private final Map<UUID, PlaybackSession> sessions = new HashMap<>();
     private final Map<UUID, Long> requests = new HashMap<>();
     private final Map<UUID, ArrayDeque<Song>> queues = new HashMap<>();
     private long requestSequence;
 
-    public PlaybackService(Plugin plugin, MidiCompiler compiler, Executor compilerExecutor, long trailingSilenceMicros, int maxVoices, float pitchBendRange, long sustainRefreshMicros, int maxEventsPerTick, long lateDropThresholdMicros, int lateDropVelocityThreshold, EnhancedAudioService enhancedAudio, OrchestraProfile orchestra) {
+    public PlaybackService(Plugin plugin, MidiCompiler compiler, Executor compilerExecutor, long trailingSilenceMicros, int maxVoices, float pitchBendRange, long sustainRefreshMicros, int maxEventsPerTick, long lateDropThresholdMicros, int lateDropVelocityThreshold, long preRollMicros, long outboundLookaheadMicros, boolean pingCompensation, long maxPingCompensationMicros, boolean adaptiveQuality, long adaptiveLagThresholdMicros, EnhancedAudioService enhancedAudio, OrchestraProfile orchestra) {
         this.plugin = plugin;
         this.compiler = compiler;
         this.compilerExecutor = compilerExecutor;
@@ -60,6 +66,12 @@ public final class PlaybackService {
         this.maxEventsPerTick = maxEventsPerTick;
         this.lateDropThresholdMicros = lateDropThresholdMicros;
         this.lateDropVelocityThreshold = lateDropVelocityThreshold;
+        this.preRollMicros = preRollMicros;
+        this.outboundLookaheadMicros = outboundLookaheadMicros;
+        this.pingCompensation = pingCompensation;
+        this.maxPingCompensationMicros = maxPingCompensationMicros;
+        this.adaptiveQuality = adaptiveQuality;
+        this.adaptiveLagThresholdMicros = adaptiveLagThresholdMicros;
         this.arrangementCompiler = new ArrangementCompiler(orchestra);
     }
 
@@ -190,7 +202,9 @@ public final class PlaybackService {
         PlaybackSession session = new PlaybackSession(song, arrangement, volume, requestId, positionMicros);
         session.nextNote = firstNoteAtOrAfter(arrangement, positionMicros);
         initializeControllers(session, positionMicros);
-        session.startNanos = System.nanoTime() - positionMicros * NANOS_PER_MICRO;
+        // A small negative song-time window lets the first packets leave before beat one.
+        // This is invisible to the player, but absorbs normal ping and the first scheduler tick.
+        session.startNanos = System.nanoTime() + preRollMicros * NANOS_PER_MICRO - positionMicros * NANOS_PER_MICRO;
         sessions.put(player.getUniqueId(), session);
         session.task = Bukkit.getScheduler().runTaskTimer(plugin, () -> tick(player.getUniqueId(), session), 1L, 1L);
     }
@@ -203,9 +217,11 @@ public final class PlaybackService {
             cancelTask(expected);
             return;
         }
-        long elapsed = elapsedMicros(session);
+        long rawElapsed = rawElapsedMicros(session);
+        long elapsed = Math.max(0L, rawElapsed);
+        updateLoadPressure(session);
         cleanReleasedNotes(session, elapsed);
-        processDueEvents(player, session, elapsed);
+        processDueEvents(player, session, rawElapsed + networkLeadMicros(player));
         refreshSustainedNotes(player, session, elapsed);
         if (elapsed >= session.arrangement.source().durationMicros() + trailingSilenceMicros) advanceQueue(player, session.volume);
     }
@@ -224,23 +240,36 @@ public final class PlaybackService {
         return next;
     }
 
-    private void processDueEvents(Player player, PlaybackSession session, long elapsed) {
+    /**
+     * Harvest a whole due window before rendering it. This makes a dense chord a deliberate
+     * batch, and lets drums/bass attacks win over quiet decoration during a late server tick.
+     */
+    private void processDueEvents(Player player, PlaybackSession session, long deadlineMicros) {
         List<MidiControlEvent> controls = session.arrangement.source().controls();
         List<PlayableNote> notes = session.arrangement.notes();
-        int processed = 0;
-        while (processed++ < maxEventsPerTick) {
+        int budget = maxEventsPerTick;
+        while (true) {
             long controlTime = session.nextControl < controls.size() ? controls.get(session.nextControl).timeMicros() : Long.MAX_VALUE;
             long noteTime = session.nextNote < notes.size() ? notes.get(session.nextNote).timeMicros() : Long.MAX_VALUE;
-            if (Math.min(controlTime, noteTime) > elapsed) return;
-            if (controlTime <= noteTime) {
+            long eventTime = Math.min(controlTime, noteTime);
+            if (eventTime > deadlineMicros) break;
+            // Controller events at a timestamp always apply before its chord, matching MIDI.
+            while (session.nextControl < controls.size() && controls.get(session.nextControl).timeMicros() == eventTime) {
                 applyControl(session, controls.get(session.nextControl++));
-            } else {
-                PlayableNote note = notes.get(session.nextNote++);
-                if (elapsed - note.timeMicros() > lateDropThresholdMicros && !note.percussion() && note.velocity() < lateDropVelocityThreshold) {
+            }
+            List<PlayableNote> chord = new ArrayList<>();
+            while (session.nextNote < notes.size() && notes.get(session.nextNote).timeMicros() == eventTime) {
+                chord.add(notes.get(session.nextNote++));
+            }
+            chord.sort(Comparator.comparingInt(this::priority).reversed());
+            for (PlayableNote note : chord) {
+                boolean staleSoftNote = deadlineMicros - note.timeMicros() > lateDropThresholdMicros && priority(note) < lateDropVelocityThreshold;
+                boolean adaptiveDrop = adaptiveQuality && session.loadPressure > 0.35D && priority(note) < adaptivePriorityFloor(session);
+                if (budget-- <= 0 || staleSoftNote || adaptiveDrop) {
                     session.droppedNotes++;
-                } else {
-                    emitNote(player, session, note, 1.0F);
+                    continue;
                 }
+                emitNote(player, session, note, 1.0F);
             }
         }
     }
@@ -294,6 +323,7 @@ public final class PlaybackService {
     }
 
     private void refreshSustainedNotes(Player player, PlaybackSession session, long elapsed) {
+        if (adaptiveQuality && session.loadPressure > 0.35D) return;
         for (ActiveNote active : session.activeNotes) {
             if (session.sustain[active.note.channel()] && active.note.endTimeMicros() <= elapsed && elapsed >= active.nextRefreshMicros) {
                 renderNativeNote(player, session, active.note, 0.35F);
@@ -303,7 +333,8 @@ public final class PlaybackService {
     }
 
     private int priority(PlayableNote note) {
-        return note.velocity() + (note.percussion() ? 128 : 0);
+        // Percussion and low-register attacks establish the beat; preserve them first.
+        return note.velocity() + (note.percussion() ? 128 : 0) + (note.midiKey() < 48 ? 24 : 0);
     }
 
     private float bendSemitones(PlaybackSession session, int channel) {
@@ -311,7 +342,32 @@ public final class PlaybackService {
     }
 
     private long elapsedMicros(PlaybackSession session) {
-        return Math.max(session.positionMicros, (System.nanoTime() - session.startNanos) / NANOS_PER_MICRO);
+        return Math.max(session.positionMicros, rawElapsedMicros(session));
+    }
+
+    private long rawElapsedMicros(PlaybackSession session) {
+        return (System.nanoTime() - session.startNanos) / NANOS_PER_MICRO;
+    }
+
+    private long networkLeadMicros(Player player) {
+        if (!pingCompensation) return outboundLookaheadMicros;
+        // Bukkit reports round-trip ping. One half is a useful bounded approximation for
+        // dispatching a server-side sound packet early without drifting the song clock.
+        return outboundLookaheadMicros + Math.min(maxPingCompensationMicros, Math.max(0L, player.getPing() * 500L));
+    }
+
+    private void updateLoadPressure(PlaybackSession session) {
+        long now = System.nanoTime();
+        if (session.lastTickNanos != 0L) {
+            long overrun = Math.max(0L, (now - session.lastTickNanos) / NANOS_PER_MICRO - 50_000L);
+            double instant = Math.min(1.0D, overrun / (double) Math.max(1L, adaptiveLagThresholdMicros));
+            session.loadPressure = session.loadPressure * 0.75D + instant * 0.25D;
+        }
+        session.lastTickNanos = now;
+    }
+
+    private int adaptivePriorityFloor(PlaybackSession session) {
+        return 52 + (int) Math.round(session.loadPressure * 42.0D);
     }
 
     private int firstNoteAtOrAfter(NoteBlockArrangement arrangement, long positionMicros) {
@@ -346,6 +402,8 @@ public final class PlaybackService {
         private boolean paused;
         private BukkitTask task;
         private int droppedNotes;
+        private long lastTickNanos;
+        private double loadPressure;
         private final int[] pitchBend = new int[16];
         private final float[] pitchBendRange = new float[16];
         private final float[] channelVolume = new float[16];
