@@ -63,7 +63,7 @@ public final class MusicMenu implements Listener {
         inventory.setItem(20, item(Material.JUKEBOX, ChatColor.GREEN + "Now Playing", List.of(ChatColor.GRAY + "See song progress and controls")));
         inventory.setItem(22, item(Material.MUSIC_DISC_CAT, ChatColor.WHITE + "Music", List.of(ChatColor.GRAY + String.valueOf(library.songs().size()) + " songs in your library")));
         inventory.setItem(24, item(Material.COMPARATOR, ChatColor.AQUA + "Settings", List.of(ChatColor.GRAY + "Volume and player preferences")));
-        inventory.setItem(26, item(Material.JUKEBOX, ChatColor.RED + "" + ChatColor.BOLD + "JUKEBOX", List.of(ChatColor.GRAY + "Get a permanent public music player")));
+        inventory.setItem(4, item(Material.JUKEBOX, ChatColor.RED + "" + ChatColor.BOLD + "JUKEBOX", List.of(ChatColor.GRAY + "Get a permanent public music player")));
         inventory.setItem(49, item(Material.COMPASS, ChatColor.GOLD + "MENU"));
         player.openInventory(inventory);
     }
@@ -155,7 +155,7 @@ public final class MusicMenu implements Listener {
         if (slot == 20) openNowPlaying(player);
         else if (slot == 22) openLibrary(player, 0);
         else if (slot == 24) openSettings(player);
-        else if (slot == 26 && jukeboxes != null) jukeboxes.give(player);
+        else if (slot == 4 && jukeboxes != null) jukeboxes.give(player);
     }
 
     private void clickLibrary(Player player, int page, int slot, boolean shiftClick) {
