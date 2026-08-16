@@ -7,7 +7,7 @@ authors: [Ryder]
 commands:
   music:
     description: Open and control the MidiBlock player.
-    usage: /music [list|play|stop|pause|resume|volume|jukebox|pack|history|playlist|analyze|reload]
+    usage: /music [list|play|stop|pause|resume|volume|jukebox|orchestra|pack|history|playlist|analyze|reload]
     aliases: [midiblock, mb]
 permissions:
   midiblock.use:

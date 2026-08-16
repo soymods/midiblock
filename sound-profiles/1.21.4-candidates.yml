@@ -1,0 +1,1284 @@
+minecraft-version: '1.21.4'
+asset-index: '19'
+generated-by: vanilla_sound_catalog.py
+profiles:
+  'minecraft:block.amethyst_block.break':
+    sample-variants: 4
+    base-midi-estimate: 89.91
+    tonal-confidence: 0.420
+    duration-ms: 1292
+    rms: 0.0249
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_block.chime':
+    sample-variants: 1
+    base-midi-estimate: 53.56
+    tonal-confidence: 0.215
+    duration-ms: 1999
+    rms: 0.0041
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.amethyst_block.fall':
+    sample-variants: 13
+    base-midi-estimate: 89.92
+    tonal-confidence: 0.441
+    duration-ms: 2000
+    rms: 0.0088
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_block.hit':
+    sample-variants: 12
+    base-midi-estimate: 89.25
+    tonal-confidence: 0.441
+    duration-ms: 2000
+    rms: 0.0089
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_block.place':
+    sample-variants: 4
+    base-midi-estimate: 89.85
+    tonal-confidence: 0.643
+    duration-ms: 661
+    rms: 0.0329
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_block.resonate':
+    sample-variants: 4
+    base-midi-estimate: 80.95
+    tonal-confidence: 0.478
+    duration-ms: 1632
+    rms: 0.0075
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_block.step':
+    sample-variants: 14
+    base-midi-estimate: 89.42
+    tonal-confidence: 0.441
+    duration-ms: 2000
+    rms: 0.0086
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_cluster.break':
+    sample-variants: 4
+    base-midi-estimate: 89.93
+    tonal-confidence: 0.305
+    duration-ms: 1646
+    rms: 0.0146
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_cluster.fall':
+    sample-variants: 13
+    base-midi-estimate: 89.92
+    tonal-confidence: 0.441
+    duration-ms: 2000
+    rms: 0.0088
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_cluster.hit':
+    sample-variants: 12
+    base-midi-estimate: 89.25
+    tonal-confidence: 0.441
+    duration-ms: 2000
+    rms: 0.0089
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_cluster.place':
+    sample-variants: 4
+    base-midi-estimate: 80.95
+    tonal-confidence: 0.477
+    duration-ms: 1632
+    rms: 0.0114
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.amethyst_cluster.step':
+    sample-variants: 14
+    base-midi-estimate: 89.42
+    tonal-confidence: 0.441
+    duration-ms: 2000
+    rms: 0.0086
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.beacon.activate':
+    sample-variants: 1
+    base-midi-estimate: 36.49
+    tonal-confidence: 0.835
+    duration-ms: 2000
+    rms: 0.0632
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.beacon.ambient':
+    sample-variants: 1
+    base-midi-estimate: 55.04
+    tonal-confidence: 0.818
+    duration-ms: 2000
+    rms: 0.0313
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:block.beacon.deactivate':
+    sample-variants: 1
+    base-midi-estimate: 75.93
+    tonal-confidence: 0.446
+    duration-ms: 2000
+    rms: 0.0812
+    review: pending
+    suggested-role: high-tone
+  'minecraft:block.beacon.power_select':
+    sample-variants: 3
+    base-midi-estimate: 39.90
+    tonal-confidence: 0.639
+    duration-ms: 2000
+    rms: 0.1026
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.bell.resonate':
+    sample-variants: 3
+    base-midi-estimate: 26.45
+    tonal-confidence: 0.000
+    duration-ms: 2000
+    rms: 0.0389
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.bell.use':
+    sample-variants: 6
+    base-midi-estimate: 54.80
+    tonal-confidence: 0.614
+    duration-ms: 2000
+    rms: 0.0188
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.chiseled_bookshelf.insert.enchanted':
+    sample-variants: 12
+    base-midi-estimate: 77.79
+    tonal-confidence: 1.000
+    duration-ms: 1809
+    rms: 0.0143
+    review: pending
+    suggested-role: high-tone
+  'minecraft:block.chiseled_bookshelf.pickup.enchanted':
+    sample-variants: 9
+    base-midi-estimate: 80.14
+    tonal-confidence: 0.967
+    duration-ms: 1906
+    rms: 0.0189
+    review: pending
+    suggested-role: high-tone
+  'minecraft:block.conduit.activate':
+    sample-variants: 1
+    base-midi-estimate: 35.79
+    tonal-confidence: 0.295
+    duration-ms: 2000
+    rms: 0.0801
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.conduit.ambient':
+    sample-variants: 1
+    base-midi-estimate: 55.28
+    tonal-confidence: 0.824
+    duration-ms: 2000
+    rms: 0.0842
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:block.conduit.ambient.short':
+    sample-variants: 9
+    base-midi-estimate: 50.64
+    tonal-confidence: 0.295
+    duration-ms: 2000
+    rms: 0.0088
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.conduit.attack.target':
+    sample-variants: 3
+    base-midi-estimate: 66.83
+    tonal-confidence: 0.206
+    duration-ms: 2000
+    rms: 0.0246
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:block.conduit.deactivate':
+    sample-variants: 1
+    base-midi-estimate: 47.79
+    tonal-confidence: 0.617
+    duration-ms: 2000
+    rms: 0.2242
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.enchantment_table.use':
+    sample-variants: 3
+    base-midi-estimate: 71.29
+    tonal-confidence: 0.279
+    duration-ms: 1556
+    rms: 0.0415
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:block.end_portal.spawn':
+    sample-variants: 1
+    base-midi-estimate: 39.65
+    tonal-confidence: 0.692
+    duration-ms: 2000
+    rms: 0.1566
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.end_portal_frame.fill':
+    sample-variants: 3
+    base-midi-estimate: 56.28
+    tonal-confidence: 1.000
+    duration-ms: 1524
+    rms: 0.0265
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:block.large_amethyst_bud.break':
+    sample-variants: 4
+    base-midi-estimate: 89.93
+    tonal-confidence: 0.305
+    duration-ms: 1646
+    rms: 0.0146
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.large_amethyst_bud.place':
+    sample-variants: 4
+    base-midi-estimate: 80.95
+    tonal-confidence: 0.477
+    duration-ms: 1632
+    rms: 0.0114
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.medium_amethyst_bud.break':
+    sample-variants: 4
+    base-midi-estimate: 89.93
+    tonal-confidence: 0.305
+    duration-ms: 1646
+    rms: 0.0146
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.medium_amethyst_bud.place':
+    sample-variants: 4
+    base-midi-estimate: 80.95
+    tonal-confidence: 0.477
+    duration-ms: 1632
+    rms: 0.0114
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.note_block.banjo':
+    sample-variants: 1
+    base-midi-estimate: 90.01
+    tonal-confidence: 1.000
+    duration-ms: 484
+    rms: 0.0791
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.bass':
+    sample-variants: 1
+    base-midi-estimate: 41.82
+    tonal-confidence: 1.000
+    duration-ms: 462
+    rms: 0.1363
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.bell':
+    sample-variants: 1
+    base-midi-estimate: 90.01
+    tonal-confidence: 1.000
+    duration-ms: 434
+    rms: 0.0470
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.bit':
+    sample-variants: 1
+    base-midi-estimate: 66.07
+    tonal-confidence: 1.000
+    duration-ms: 377
+    rms: 0.0477
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.chime':
+    sample-variants: 1
+    base-midi-estimate: 89.91
+    tonal-confidence: 0.748
+    duration-ms: 1103
+    rms: 0.0228
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.didgeridoo':
+    sample-variants: 1
+    base-midi-estimate: 41.82
+    tonal-confidence: 1.000
+    duration-ms: 425
+    rms: 0.1160
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.flute':
+    sample-variants: 1
+    base-midi-estimate: 77.94
+    tonal-confidence: 1.000
+    duration-ms: 612
+    rms: 0.0977
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.guitar':
+    sample-variants: 1
+    base-midi-estimate: 53.82
+    tonal-confidence: 1.000
+    duration-ms: 564
+    rms: 0.0594
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.harp':
+    sample-variants: 1
+    base-midi-estimate: 66.07
+    tonal-confidence: 1.000
+    duration-ms: 593
+    rms: 0.0701
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.iron_xylophone':
+    sample-variants: 1
+    base-midi-estimate: 66.07
+    tonal-confidence: 1.000
+    duration-ms: 581
+    rms: 0.0982
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.note_block.pling':
+    sample-variants: 1
+    base-midi-estimate: 66.07
+    tonal-confidence: 1.000
+    duration-ms: 643
+    rms: 0.1100
+    review: pending
+    suggested-role: tonal-core
+  'minecraft:block.portal.ambient':
+    sample-variants: 1
+    base-midi-estimate: 40.77
+    tonal-confidence: 1.000
+    duration-ms: 1997
+    rms: 0.1497
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.portal.travel':
+    sample-variants: 1
+    base-midi-estimate: 51.06
+    tonal-confidence: 0.283
+    duration-ms: 2000
+    rms: 0.1403
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.portal.trigger':
+    sample-variants: 1
+    base-midi-estimate: 49.82
+    tonal-confidence: 0.178
+    duration-ms: 2000
+    rms: 0.0224
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:block.respawn_anchor.ambient':
+    sample-variants: 3
+    base-midi-estimate: 60.47
+    tonal-confidence: 0.121
+    duration-ms: 2000
+    rms: 0.0251
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:block.respawn_anchor.charge':
+    sample-variants: 3
+    base-midi-estimate: 77.90
+    tonal-confidence: 0.814
+    duration-ms: 2000
+    rms: 0.0858
+    review: pending
+    suggested-role: high-tone
+  'minecraft:block.respawn_anchor.deplete':
+    sample-variants: 2
+    base-midi-estimate: 38.28
+    tonal-confidence: 0.277
+    duration-ms: 2000
+    rms: 0.0669
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.respawn_anchor.set_spawn':
+    sample-variants: 3
+    base-midi-estimate: 35.28
+    tonal-confidence: 0.509
+    duration-ms: 2000
+    rms: 0.0884
+    review: pending
+    suggested-role: low-tone
+  'minecraft:block.sculk.break':
+    sample-variants: 14
+    base-midi-estimate: 61.99
+    tonal-confidence: 0.090
+    duration-ms: 1565
+    rms: 0.0117
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk.charge':
+    sample-variants: 5
+    base-midi-estimate: 64.75
+    tonal-confidence: 0.264
+    duration-ms: 496
+    rms: 0.0268
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk.fall':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk.hit':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk.place':
+    sample-variants: 5
+    base-midi-estimate: 60.23
+    tonal-confidence: 0.177
+    duration-ms: 1362
+    rms: 0.0149
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk.spread':
+    sample-variants: 5
+    base-midi-estimate: 71.16
+    tonal-confidence: 0.117
+    duration-ms: 600
+    rms: 0.0094
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk.step':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_catalyst.bloom':
+    sample-variants: 13
+    base-midi-estimate: 80.17
+    tonal-confidence: 0.132
+    duration-ms: 2000
+    rms: 0.0112
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_catalyst.break':
+    sample-variants: 10
+    base-midi-estimate: 81.11
+    tonal-confidence: 0.060
+    duration-ms: 1408
+    rms: 0.0318
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_catalyst.fall':
+    sample-variants: 6
+    base-midi-estimate: 60.00
+    tonal-confidence: 0.253
+    duration-ms: 1284
+    rms: 0.0196
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_catalyst.hit':
+    sample-variants: 6
+    base-midi-estimate: 60.00
+    tonal-confidence: 0.253
+    duration-ms: 1284
+    rms: 0.0196
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_catalyst.place':
+    sample-variants: 5
+    base-midi-estimate: 76.36
+    tonal-confidence: 0.084
+    duration-ms: 1051
+    rms: 0.0317
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_catalyst.step':
+    sample-variants: 6
+    base-midi-estimate: 60.00
+    tonal-confidence: 0.253
+    duration-ms: 1284
+    rms: 0.0196
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.break':
+    sample-variants: 5
+    base-midi-estimate: 59.94
+    tonal-confidence: 0.292
+    duration-ms: 1704
+    rms: 0.0158
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.clicking':
+    sample-variants: 6
+    base-midi-estimate: 74.70
+    tonal-confidence: 0.354
+    duration-ms: 1288
+    rms: 0.0755
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.clicking_stop':
+    sample-variants: 5
+    base-midi-estimate: 57.33
+    tonal-confidence: 0.295
+    duration-ms: 1496
+    rms: 0.0124
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.fall':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.hit':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.place':
+    sample-variants: 5
+    base-midi-estimate: 60.23
+    tonal-confidence: 0.182
+    duration-ms: 1364
+    rms: 0.0171
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_sensor.step':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_shrieker.break':
+    sample-variants: 6
+    base-midi-estimate: 75.50
+    tonal-confidence: 0.100
+    duration-ms: 2000
+    rms: 0.0138
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_shrieker.fall':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_shrieker.hit':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_shrieker.place':
+    sample-variants: 5
+    base-midi-estimate: 60.23
+    tonal-confidence: 0.139
+    duration-ms: 1411
+    rms: 0.0204
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_shrieker.shriek':
+    sample-variants: 5
+    base-midi-estimate: 86.60
+    tonal-confidence: 0.166
+    duration-ms: 2000
+    rms: 0.1283
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_shrieker.step':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_vein.break':
+    sample-variants: 5
+    base-midi-estimate: 60.23
+    tonal-confidence: 0.217
+    duration-ms: 1411
+    rms: 0.0116
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_vein.fall':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_vein.hit':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_vein.place':
+    sample-variants: 5
+    base-midi-estimate: 60.23
+    tonal-confidence: 0.217
+    duration-ms: 1411
+    rms: 0.0116
+    review: pending
+    suggested-role: texture
+  'minecraft:block.sculk_vein.step':
+    sample-variants: 6
+    base-midi-estimate: 63.47
+    tonal-confidence: 0.129
+    duration-ms: 1172
+    rms: 0.0093
+    review: pending
+    suggested-role: texture
+  'minecraft:block.small_amethyst_bud.break':
+    sample-variants: 4
+    base-midi-estimate: 89.93
+    tonal-confidence: 0.305
+    duration-ms: 1646
+    rms: 0.0146
+    review: pending
+    suggested-role: crystal
+  'minecraft:block.small_amethyst_bud.place':
+    sample-variants: 4
+    base-midi-estimate: 80.95
+    tonal-confidence: 0.477
+    duration-ms: 1632
+    rms: 0.0114
+    review: pending
+    suggested-role: crystal
+  'minecraft:enchant.thorns.hit':
+    sample-variants: 4
+    base-midi-estimate: 71.52
+    tonal-confidence: 1.000
+    duration-ms: 501
+    rms: 0.0907
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:entity.allay.ambient_with_item':
+    sample-variants: 4
+    base-midi-estimate: 78.77
+    tonal-confidence: 0.112
+    duration-ms: 2000
+    rms: 0.0846
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.allay.ambient_without_item':
+    sample-variants: 4
+    base-midi-estimate: 70.78
+    tonal-confidence: 0.699
+    duration-ms: 2000
+    rms: 0.1020
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.allay.death':
+    sample-variants: 2
+    base-midi-estimate: 91.67
+    tonal-confidence: 0.184
+    duration-ms: 2000
+    rms: 0.1253
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.allay.hurt':
+    sample-variants: 2
+    base-midi-estimate: 79.25
+    tonal-confidence: 0.110
+    duration-ms: 997
+    rms: 0.1099
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.allay.item_given':
+    sample-variants: 4
+    base-midi-estimate: 70.62
+    tonal-confidence: 0.313
+    duration-ms: 1500
+    rms: 0.1049
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.allay.item_taken':
+    sample-variants: 4
+    base-midi-estimate: 78.58
+    tonal-confidence: 0.165
+    duration-ms: 1500
+    rms: 0.0760
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.allay.item_thrown':
+    sample-variants: 1
+    base-midi-estimate: 77.62
+    tonal-confidence: 0.973
+    duration-ms: 997
+    rms: 0.0483
+    review: pending
+    suggested-role: airy-lead
+  'minecraft:entity.enderman.ambient':
+    sample-variants: 5
+    base-midi-estimate: 62.71
+    tonal-confidence: 0.132
+    duration-ms: 732
+    rms: 0.0995
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.enderman.death':
+    sample-variants: 1
+    base-midi-estimate: 84.10
+    tonal-confidence: 0.402
+    duration-ms: 1560
+    rms: 0.1711
+    review: pending
+    suggested-role: high-tone
+  'minecraft:entity.enderman.hurt':
+    sample-variants: 4
+    base-midi-estimate: 74.41
+    tonal-confidence: 0.138
+    duration-ms: 431
+    rms: 0.1548
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.enderman.scream':
+    sample-variants: 4
+    base-midi-estimate: 73.20
+    tonal-confidence: 0.092
+    duration-ms: 912
+    rms: 0.1916
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.enderman.stare':
+    sample-variants: 1
+    base-midi-estimate: 51.65
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0152
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.enderman.teleport':
+    sample-variants: 2
+    base-midi-estimate: 41.29
+    tonal-confidence: 1.000
+    duration-ms: 715
+    rms: 0.1640
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.experience_bottle.throw':
+    sample-variants: 1
+    base-midi-estimate: 81.16
+    tonal-confidence: 0.256
+    duration-ms: 475
+    rms: 0.0844
+    review: pending
+    suggested-role: high-tone
+  'minecraft:entity.experience_orb.pickup':
+    sample-variants: 1
+    base-midi-estimate: 73.25
+    tonal-confidence: 0.578
+    duration-ms: 768
+    rms: 0.0586
+    review: pending
+    suggested-role: high-tone
+  'minecraft:entity.firework_rocket.blast':
+    sample-variants: 1
+    base-midi-estimate: 42.80
+    tonal-confidence: 0.600
+    duration-ms: 997
+    rms: 0.0427
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.firework_rocket.blast_far':
+    sample-variants: 1
+    base-midi-estimate: 42.80
+    tonal-confidence: 1.000
+    duration-ms: 1500
+    rms: 0.0185
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.firework_rocket.large_blast':
+    sample-variants: 1
+    base-midi-estimate: 52.77
+    tonal-confidence: 0.798
+    duration-ms: 2000
+    rms: 0.0586
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.firework_rocket.large_blast_far':
+    sample-variants: 1
+    base-midi-estimate: 41.82
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0489
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.firework_rocket.launch':
+    sample-variants: 1
+    base-midi-estimate: 68.30
+    tonal-confidence: 0.058
+    duration-ms: 1625
+    rms: 0.0287
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.firework_rocket.shoot':
+    sample-variants: 1
+    base-midi-estimate: 81.16
+    tonal-confidence: 0.256
+    duration-ms: 475
+    rms: 0.0844
+    review: pending
+    suggested-role: high-tone
+  'minecraft:entity.firework_rocket.twinkle':
+    sample-variants: 1
+    base-midi-estimate: 86.61
+    tonal-confidence: 0.101
+    duration-ms: 1334
+    rms: 0.0830
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.firework_rocket.twinkle_far':
+    sample-variants: 1
+    base-midi-estimate: 46.28
+    tonal-confidence: 0.384
+    duration-ms: 2000
+    rms: 0.0372
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.ghast.ambient':
+    sample-variants: 7
+    base-midi-estimate: 68.39
+    tonal-confidence: 0.254
+    duration-ms: 1055
+    rms: 0.0784
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:entity.ghast.death':
+    sample-variants: 1
+    base-midi-estimate: 93.00
+    tonal-confidence: 0.152
+    duration-ms: 2000
+    rms: 0.0321
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.ghast.hurt':
+    sample-variants: 5
+    base-midi-estimate: 79.66
+    tonal-confidence: 0.133
+    duration-ms: 1046
+    rms: 0.2408
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.ghast.scream':
+    sample-variants: 1
+    base-midi-estimate: 81.58
+    tonal-confidence: 1.000
+    duration-ms: 872
+    rms: 0.2547
+    review: pending
+    suggested-role: high-tone
+  'minecraft:entity.ghast.shoot':
+    sample-variants: 1
+    base-midi-estimate: 47.05
+    tonal-confidence: 0.431
+    duration-ms: 716
+    rms: 0.1651
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.ghast.warn':
+    sample-variants: 1
+    base-midi-estimate: 80.84
+    tonal-confidence: 0.400
+    duration-ms: 1063
+    rms: 0.1001
+    review: pending
+    suggested-role: high-tone
+  'minecraft:entity.warden.agitated':
+    sample-variants: 6
+    base-midi-estimate: 52.25
+    tonal-confidence: 0.292
+    duration-ms: 2000
+    rms: 0.1041
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.ambient':
+    sample-variants: 12
+    base-midi-estimate: 48.55
+    tonal-confidence: 0.097
+    duration-ms: 2000
+    rms: 0.0857
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.warden.angry':
+    sample-variants: 6
+    base-midi-estimate: 45.78
+    tonal-confidence: 0.193
+    duration-ms: 2000
+    rms: 0.0831
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.warden.attack_impact':
+    sample-variants: 2
+    base-midi-estimate: 55.47
+    tonal-confidence: 0.292
+    duration-ms: 986
+    rms: 0.1869
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:entity.warden.death':
+    sample-variants: 2
+    base-midi-estimate: 44.18
+    tonal-confidence: 0.366
+    duration-ms: 2000
+    rms: 0.0983
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.dig':
+    sample-variants: 1
+    base-midi-estimate: 77.82
+    tonal-confidence: 0.096
+    duration-ms: 2000
+    rms: 0.1492
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.warden.emerge':
+    sample-variants: 1
+    base-midi-estimate: 28.77
+    tonal-confidence: 0.562
+    duration-ms: 2000
+    rms: 0.2828
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.heartbeat':
+    sample-variants: 4
+    base-midi-estimate: 41.22
+    tonal-confidence: 0.802
+    duration-ms: 1253
+    rms: 0.1061
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.hurt':
+    sample-variants: 4
+    base-midi-estimate: 49.10
+    tonal-confidence: 0.277
+    duration-ms: 2000
+    rms: 0.0979
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.listening':
+    sample-variants: 5
+    base-midi-estimate: 45.72
+    tonal-confidence: 0.397
+    duration-ms: 2000
+    rms: 0.0737
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.listening_angry':
+    sample-variants: 5
+    base-midi-estimate: 42.95
+    tonal-confidence: 0.510
+    duration-ms: 2000
+    rms: 0.0811
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.nearby_close':
+    sample-variants: 4
+    base-midi-estimate: 43.73
+    tonal-confidence: 0.770
+    duration-ms: 2000
+    rms: 0.0380
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.nearby_closer':
+    sample-variants: 3
+    base-midi-estimate: 42.14
+    tonal-confidence: 0.875
+    duration-ms: 2000
+    rms: 0.0600
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.nearby_closest':
+    sample-variants: 3
+    base-midi-estimate: 42.14
+    tonal-confidence: 0.858
+    duration-ms: 2000
+    rms: 0.0963
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.roar':
+    sample-variants: 5
+    base-midi-estimate: 66.70
+    tonal-confidence: 0.199
+    duration-ms: 2000
+    rms: 0.1816
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:entity.warden.sniff':
+    sample-variants: 4
+    base-midi-estimate: 42.61
+    tonal-confidence: 0.337
+    duration-ms: 2000
+    rms: 0.0878
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.sonic_boom':
+    sample-variants: 4
+    base-midi-estimate: 43.00
+    tonal-confidence: 0.300
+    duration-ms: 2000
+    rms: 0.2165
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.sonic_charge':
+    sample-variants: 4
+    base-midi-estimate: 57.39
+    tonal-confidence: 0.274
+    duration-ms: 1625
+    rms: 0.1928
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:entity.warden.step':
+    sample-variants: 4
+    base-midi-estimate: 33.87
+    tonal-confidence: 0.620
+    duration-ms: 1220
+    rms: 0.0240
+    review: pending
+    suggested-role: low-tone
+  'minecraft:entity.warden.tendril_clicks':
+    sample-variants: 6
+    base-midi-estimate: 74.70
+    tonal-confidence: 0.354
+    duration-ms: 1288
+    rms: 0.0755
+    review: pending
+    suggested-role: high-tone
+  'minecraft:item.goat_horn.sound.0':
+    sample-variants: 1
+    base-midi-estimate: 47.79
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0816
+    review: pending
+    suggested-role: low-tone
+  'minecraft:item.goat_horn.sound.1':
+    sample-variants: 1
+    base-midi-estimate: 59.79
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.1299
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:item.goat_horn.sound.2':
+    sample-variants: 1
+    base-midi-estimate: 49.50
+    tonal-confidence: 0.665
+    duration-ms: 2000
+    rms: 0.1331
+    review: pending
+    suggested-role: low-tone
+  'minecraft:item.goat_horn.sound.3':
+    sample-variants: 1
+    base-midi-estimate: 43.28
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.1433
+    review: pending
+    suggested-role: low-tone
+  'minecraft:item.goat_horn.sound.4':
+    sample-variants: 1
+    base-midi-estimate: 66.32
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.1391
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:item.goat_horn.sound.5':
+    sample-variants: 1
+    base-midi-estimate: 47.79
+    tonal-confidence: 0.304
+    duration-ms: 2000
+    rms: 0.1199
+    review: pending
+    suggested-role: low-tone
+  'minecraft:item.goat_horn.sound.6':
+    sample-variants: 1
+    base-midi-estimate: 30.80
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.1590
+    review: pending
+    suggested-role: low-tone
+  'minecraft:item.goat_horn.sound.7':
+    sample-variants: 1
+    base-midi-estimate: 68.41
+    tonal-confidence: 0.485
+    duration-ms: 2000
+    rms: 0.1078
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.11':
+    sample-variants: 1
+    base-midi-estimate: 31.74
+    tonal-confidence: 0.410
+    duration-ms: 2000
+    rms: 0.0151
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.13':
+    sample-variants: 1
+    base-midi-estimate: 49.82
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0786
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.5':
+    sample-variants: 1
+    base-midi-estimate: 31.74
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0202
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.blocks':
+    sample-variants: 1
+    base-midi-estimate: 59.05
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0136
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.cat':
+    sample-variants: 1
+    base-midi-estimate: 63.06
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0692
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.chirp':
+    sample-variants: 1
+    base-midi-estimate: 47.79
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0863
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.creator':
+    sample-variants: 1
+    base-midi-estimate: 76.01
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0388
+    review: pending
+    suggested-role: high-tone
+  'minecraft:music_disc.creator_music_box':
+    sample-variants: 1
+    base-midi-estimate: 91.13
+    tonal-confidence: 0.041
+    duration-ms: 2000
+    rms: 0.0262
+    review: pending
+    suggested-role: review-for-texture
+  'minecraft:music_disc.far':
+    sample-variants: 1
+    base-midi-estimate: 67.97
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0328
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.mall':
+    sample-variants: 1
+    base-midi-estimate: 66.80
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0473
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.mellohi':
+    sample-variants: 1
+    base-midi-estimate: 54.80
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.1316
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.otherside':
+    sample-variants: 1
+    base-midi-estimate: 75.93
+    tonal-confidence: 0.616
+    duration-ms: 2000
+    rms: 0.0165
+    review: pending
+    suggested-role: high-tone
+  'minecraft:music_disc.pigstep':
+    sample-variants: 1
+    base-midi-estimate: 72.92
+    tonal-confidence: 0.347
+    duration-ms: 2000
+    rms: 0.1859
+    review: pending
+    suggested-role: high-tone
+  'minecraft:music_disc.precipice':
+    sample-variants: 1
+    base-midi-estimate: 77.03
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.1075
+    review: pending
+    suggested-role: high-tone
+  'minecraft:music_disc.relic':
+    sample-variants: 1
+    base-midi-estimate: 26.45
+    tonal-confidence: 0.899
+    duration-ms: 2000
+    rms: 0.0935
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.stal':
+    sample-variants: 1
+    base-midi-estimate: 37.82
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0570
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.strad':
+    sample-variants: 1
+    base-midi-estimate: 53.82
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0316
+    review: pending
+    suggested-role: low-tone
+  'minecraft:music_disc.wait':
+    sample-variants: 1
+    base-midi-estimate: 55.74
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0613
+    review: pending
+    suggested-role: mid-tone
+  'minecraft:music_disc.ward':
+    sample-variants: 1
+    base-midi-estimate: 57.06
+    tonal-confidence: 1.000
+    duration-ms: 2000
+    rms: 0.0839
+    review: pending
+    suggested-role: mid-tone

@@ -9,6 +9,7 @@ import dev.ryder.midiblock.enhanced.EnhancedAudioService;
 import dev.ryder.midiblock.midi.CompiledSong;
 import dev.ryder.midiblock.midi.MidiCompiler;
 import dev.ryder.midiblock.midi.MidiControlEvent;
+import dev.ryder.midiblock.orchestra.OrchestraProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -41,13 +42,13 @@ public final class PlaybackService {
     private final int maxEventsPerTick;
     private final long lateDropThresholdMicros;
     private final int lateDropVelocityThreshold;
-    private final ArrangementCompiler arrangementCompiler = new ArrangementCompiler();
+    private final ArrangementCompiler arrangementCompiler;
     private final Map<UUID, PlaybackSession> sessions = new HashMap<>();
     private final Map<UUID, Long> requests = new HashMap<>();
     private final Map<UUID, ArrayDeque<Song>> queues = new HashMap<>();
     private long requestSequence;
 
-    public PlaybackService(Plugin plugin, MidiCompiler compiler, Executor compilerExecutor, long trailingSilenceMicros, int maxVoices, float pitchBendRange, long sustainRefreshMicros, int maxEventsPerTick, long lateDropThresholdMicros, int lateDropVelocityThreshold, EnhancedAudioService enhancedAudio) {
+    public PlaybackService(Plugin plugin, MidiCompiler compiler, Executor compilerExecutor, long trailingSilenceMicros, int maxVoices, float pitchBendRange, long sustainRefreshMicros, int maxEventsPerTick, long lateDropThresholdMicros, int lateDropVelocityThreshold, EnhancedAudioService enhancedAudio, OrchestraProfile orchestra) {
         this.plugin = plugin;
         this.compiler = compiler;
         this.compilerExecutor = compilerExecutor;
@@ -59,6 +60,7 @@ public final class PlaybackService {
         this.maxEventsPerTick = maxEventsPerTick;
         this.lateDropThresholdMicros = lateDropThresholdMicros;
         this.lateDropVelocityThreshold = lateDropVelocityThreshold;
+        this.arrangementCompiler = new ArrangementCompiler(orchestra);
     }
 
     /** Starts immediately when compiled, otherwise queues a background compilation. */
@@ -263,6 +265,8 @@ public final class PlaybackService {
         float finalPitch = Math.clamp(pitch, 0.5F, 2.0F);
         if (enhancedAudio.isEnabledFor(player)) {
             player.playSound(player.getLocation(), enhancedAudio.soundId(note), finalVolume, finalPitch);
+        } else if (note.orchestraSoundKey() != null) {
+            player.playSound(player.getLocation(), note.orchestraSoundKey(), finalVolume, finalPitch);
         } else {
             player.playSound(player.getLocation(), note.sound(), finalVolume, finalPitch);
         }

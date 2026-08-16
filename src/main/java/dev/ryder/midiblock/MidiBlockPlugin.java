@@ -6,6 +6,7 @@ import dev.ryder.midiblock.library.SongLibrary;
 import dev.ryder.midiblock.jukebox.JukeboxService;
 import dev.ryder.midiblock.midi.MidiCompiler;
 import dev.ryder.midiblock.playback.PlaybackService;
+import dev.ryder.midiblock.orchestra.OrchestraProfile;
 import dev.ryder.midiblock.profile.PlayerSettingsStore;
 import dev.ryder.midiblock.ui.MusicMenu;
 import org.bukkit.command.PluginCommand;
@@ -23,6 +24,7 @@ public final class MidiBlockPlugin extends JavaPlugin {
     private ExecutorService compilerExecutor;
     private PlayerSettingsStore playerSettings;
     private EnhancedAudioService enhancedAudio;
+    private OrchestraProfile orchestra;
 
     @Override
     public void onEnable() {
@@ -43,8 +45,10 @@ public final class MidiBlockPlugin extends JavaPlugin {
         int maxEventsPerTick = Math.max(1, getConfig().getInt("playback.max-events-per-tick", 512));
         long lateDropThresholdMicros = Math.max(0L, getConfig().getLong("playback.late-drop-threshold-millis", 150L) * 1_000L);
         int lateDropVelocityThreshold = Math.clamp(getConfig().getInt("playback.late-drop-velocity-threshold", 72), 0, 127);
+        saveResource("sound-profiles/1.21.4.yml", false);
+        this.orchestra = OrchestraProfile.load(new java.io.File(getDataFolder(), "sound-profiles/1.21.4.yml"));
         this.enhancedAudio = new EnhancedAudioService(this);
-        this.playbackService = new PlaybackService(this, midiCompiler, compilerExecutor, trailingSilenceMicros, maxVoices, bendRange, sustainRefreshMicros, maxEventsPerTick, lateDropThresholdMicros, lateDropVelocityThreshold, enhancedAudio);
+        this.playbackService = new PlaybackService(this, midiCompiler, compilerExecutor, trailingSilenceMicros, maxVoices, bendRange, sustainRefreshMicros, maxEventsPerTick, lateDropThresholdMicros, lateDropVelocityThreshold, enhancedAudio, orchestra);
         this.playerSettings = new PlayerSettingsStore(getDataFolder(), (float) getConfig().getDouble("playback.default-volume", 0.70D));
         warmLibrary();
 
@@ -56,7 +60,7 @@ public final class MidiBlockPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(enhancedAudio, this);
 
         PluginCommand command = Objects.requireNonNull(getCommand("music"), "music command missing from plugin.yml");
-        MusicCommand musicCommand = new MusicCommand(this, songLibrary, playbackService, playerSettings, enhancedAudio, jukeboxes, menu);
+        MusicCommand musicCommand = new MusicCommand(this, songLibrary, playbackService, playerSettings, enhancedAudio, orchestra, jukeboxes, menu);
         command.setExecutor(musicCommand);
         command.setTabCompleter(musicCommand);
 

@@ -3,6 +3,7 @@ package dev.ryder.midiblock.arrangement;
 import dev.ryder.midiblock.library.Song;
 import dev.ryder.midiblock.midi.CompiledSong;
 import dev.ryder.midiblock.midi.MidiNote;
+import dev.ryder.midiblock.orchestra.OrchestraProfile;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,10 +20,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /** Builds native sound plans and reads optional <song>.song.yml channel overrides. */
 public final class ArrangementCompiler {
-    private static final int LOWEST_NATIVE_KEY = 42;
-    private static final int HIGHEST_NATIVE_KEY = 66;
+    private static final int LOWEST_ORCHESTRA_KEY = 24;
+    private static final int HIGHEST_ORCHESTRA_KEY = 102;
     private final NativeInstrumentMapper instruments = new NativeInstrumentMapper();
+    private final OrchestraProfile orchestra;
     private final Map<String, NoteBlockArrangement> memory = new ConcurrentHashMap<>();
+
+    public ArrangementCompiler(OrchestraProfile orchestra) {
+        this.orchestra = orchestra;
+    }
 
     public NoteBlockArrangement getOrCompile(Song song, CompiledSong compiled) {
         String cacheKey = cacheKey(song, compiled);
@@ -51,9 +57,11 @@ public final class ArrangementCompiler {
             if (note.channel() != 9) parts.computeIfAbsent(new Part(note.channel(), note.program()), ignored -> new ArrayList<>()).add(note);
         }
         Map<Part, Integer> shifts = new HashMap<>();
+        Map<Part, OrchestraProfile.Entry> orchestraSources = new HashMap<>();
         for (Map.Entry<Part, List<MidiNote>> entry : parts.entrySet()) {
             int baseTranspose = overrides.transpose + overrides.channel(entry.getKey().channel).transpose;
             shifts.put(entry.getKey(), bestOctaveShift(entry.getValue(), baseTranspose));
+            orchestraSources.put(entry.getKey(), orchestra.bestFor(entry.getKey().program, entry.getValue(), shifts.get(entry.getKey())));
         }
 
         int outOfRange = 0;
@@ -63,15 +71,18 @@ public final class ArrangementCompiler {
             ChannelOverride channelOverride = overrides.channel(note.channel());
             if (note.channel() == 9) {
                 percussion++;
-                rendered.add(new PlayableNote(note.timeMicros(), note.endTimeMicros(), note.channel(), note.key(), note.program(), instruments.percussion(note.key()), 1.0F, note.velocity(), true));
+                rendered.add(new PlayableNote(note.timeMicros(), note.endTimeMicros(), note.channel(), note.key(), note.program(), instruments.percussion(note.key()), null, 1.0F, note.velocity(), true));
                 continue;
             }
             int transpose = shifts.get(new Part(note.channel(), note.program()));
             int translatedKey = note.key() + transpose;
-            if (translatedKey < LOWEST_NATIVE_KEY || translatedKey > HIGHEST_NATIVE_KEY) outOfRange++;
+            if (translatedKey < LOWEST_ORCHESTRA_KEY || translatedKey > HIGHEST_ORCHESTRA_KEY) outOfRange++;
             Sound sound = channelOverride.sound != null ? channelOverride.sound : instruments.melodic(note.program());
-            float pitch = (float) Math.pow(2.0D, (translatedKey - 54) / 12.0D);
-            rendered.add(new PlayableNote(note.timeMicros(), note.endTimeMicros(), note.channel(), note.key(), note.program(), sound, Math.clamp(pitch, 0.5F, 2.0F), note.velocity(), false));
+            OrchestraProfile.Entry orchestraSource = orchestraSources.get(new Part(note.channel(), note.program()));
+            float pitch = orchestraSource == null
+                ? (float) Math.pow(2.0D, (translatedKey - 54) / 12.0D)
+                : (float) Math.pow(2.0D, (translatedKey - orchestraSource.baseMidi()) / 12.0D);
+            rendered.add(new PlayableNote(note.timeMicros(), note.endTimeMicros(), note.channel(), note.key(), note.program(), sound, orchestraSource == null ? null : orchestraSource.soundKey(), Math.clamp(pitch, 0.5F, 2.0F), note.velocity(), false));
         }
         Map<String, Integer> reportedShifts = new HashMap<>();
         shifts.forEach((part, shift) -> reportedShifts.put("channel " + (part.channel + 1) + ", program " + part.program, shift));
@@ -86,7 +97,7 @@ public final class ArrangementCompiler {
             long cost = Math.abs(octave); // Prefer the least disruptive octave in ties.
             for (MidiNote note : notes) {
                 int translated = note.key() + candidate;
-                cost += Math.max(0, LOWEST_NATIVE_KEY - translated) + Math.max(0, translated - HIGHEST_NATIVE_KEY);
+                cost += Math.max(0, LOWEST_ORCHESTRA_KEY - translated) + Math.max(0, translated - HIGHEST_ORCHESTRA_KEY);
             }
             if (cost < bestCost) {
                 bestCost = cost;

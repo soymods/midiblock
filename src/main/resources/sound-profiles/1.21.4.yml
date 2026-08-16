@@ -1,0 +1,110 @@
+# Balanced first-pass Minecraft orchestra. Promote/tune entries after in-game auditions.
+sounds:
+  harp:
+    sound: minecraft:block.note_block.harp
+    base-midi: 66.1
+    safe-min: 42
+    safe-max: 90
+    roles: [piano, tonal-core]
+  bass:
+    sound: minecraft:block.note_block.bass
+    base-midi: 41.8
+    safe-min: 30
+    safe-max: 54
+    roles: [bass]
+  guitar:
+    sound: minecraft:block.note_block.guitar
+    base-midi: 53.8
+    safe-min: 42
+    safe-max: 66
+    roles: [pluck, piano]
+  banjo:
+    sound: minecraft:block.note_block.banjo
+    base-midi: 90.0
+    safe-min: 66
+    safe-max: 102
+    roles: [pluck]
+  bell:
+    sound: minecraft:block.note_block.bell
+    base-midi: 90.0
+    safe-min: 66
+    safe-max: 102
+    roles: [mallet, tonal-core]
+  chime:
+    sound: minecraft:block.note_block.chime
+    base-midi: 89.9
+    safe-min: 66
+    safe-max: 102
+    roles: [mallet, strings]
+  flute:
+    sound: minecraft:block.note_block.flute
+    base-midi: 77.9
+    safe-min: 54
+    safe-max: 90
+    roles: [wind]
+  didgeridoo:
+    sound: minecraft:block.note_block.didgeridoo
+    base-midi: 41.8
+    safe-min: 30
+    safe-max: 54
+    roles: [organ, bass]
+  bit:
+    sound: minecraft:block.note_block.bit
+    base-midi: 66.1
+    safe-min: 42
+    safe-max: 90
+    roles: [synth]
+  pling:
+    sound: minecraft:block.note_block.pling
+    base-midi: 66.1
+    safe-min: 42
+    safe-max: 90
+    roles: [synth, mallet]
+  beacon:
+    sound: minecraft:block.beacon.ambient
+    base-midi: 55.0
+    safe-min: 43
+    safe-max: 67
+    roles: [organ, strings]
+  portal:
+    sound: minecraft:block.portal.ambient
+    base-midi: 40.8
+    safe-min: 29
+    safe-max: 53
+    roles: [texture, bass]
+  portal-frame:
+    sound: minecraft:block.end_portal_frame.fill
+    base-midi: 56.3
+    safe-min: 44
+    safe-max: 68
+    roles: [organ, texture]
+  amethyst:
+    sound: minecraft:block.amethyst_block.resonate
+    base-midi: 81.0
+    safe-min: 69
+    safe-max: 93
+    roles: [mallet, strings]
+  enchanted-bookshelf:
+    sound: minecraft:block.chiseled_bookshelf.insert.enchanted
+    base-midi: 77.8
+    safe-min: 66
+    safe-max: 90
+    roles: [synth, texture]
+  thorns:
+    sound: minecraft:enchant.thorns.hit
+    base-midi: 71.5
+    safe-min: 60
+    safe-max: 83
+    roles: [synth, mallet]
+  goat-horn-low:
+    sound: minecraft:item.goat_horn.sound.1
+    base-midi: 59.8
+    safe-min: 48
+    safe-max: 72
+    roles: [wind, brass]
+  goat-horn-high:
+    sound: minecraft:item.goat_horn.sound.4
+    base-midi: 66.3
+    safe-min: 54
+    safe-max: 78
+    roles: [wind, brass]

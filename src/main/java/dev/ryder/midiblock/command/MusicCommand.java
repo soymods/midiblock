@@ -4,6 +4,7 @@ import dev.ryder.midiblock.MidiBlockPlugin;
 import dev.ryder.midiblock.enhanced.EnhancedAudioService;
 import dev.ryder.midiblock.library.Song;
 import dev.ryder.midiblock.jukebox.JukeboxService;
+import dev.ryder.midiblock.orchestra.OrchestraProfile;
 import dev.ryder.midiblock.library.SongLibrary;
 import dev.ryder.midiblock.playback.PlaybackService;
 import dev.ryder.midiblock.profile.PlayerSettingsStore;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 public final class MusicCommand implements CommandExecutor, TabCompleter {
-    private static final List<String> SUBCOMMANDS = List.of("list", "play", "stop", "pause", "resume", "volume", "jukebox", "pack", "history", "playlist", "analyze", "reload");
+    private static final List<String> SUBCOMMANDS = List.of("list", "play", "stop", "pause", "resume", "volume", "jukebox", "orchestra", "pack", "history", "playlist", "analyze", "reload");
 
     private final MidiBlockPlugin plugin;
     private final SongLibrary library;
@@ -31,15 +32,17 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
     private final PlayerSettingsStore settings;
     private final EnhancedAudioService enhancedAudio;
     private final JukeboxService jukeboxes;
+    private final OrchestraProfile orchestra;
     private final MusicMenu menu;
 
-    public MusicCommand(MidiBlockPlugin plugin, SongLibrary library, PlaybackService playback, PlayerSettingsStore settings, EnhancedAudioService enhancedAudio, JukeboxService jukeboxes, MusicMenu menu) {
+    public MusicCommand(MidiBlockPlugin plugin, SongLibrary library, PlaybackService playback, PlayerSettingsStore settings, EnhancedAudioService enhancedAudio, OrchestraProfile orchestra, JukeboxService jukeboxes, MusicMenu menu) {
         this.plugin = plugin;
         this.library = library;
         this.playback = playback;
         this.settings = settings;
         this.enhancedAudio = enhancedAudio;
         this.jukeboxes = jukeboxes;
+        this.orchestra = orchestra;
         this.menu = menu;
     }
 
@@ -70,6 +73,7 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
             case "volume" -> setVolume(player, args);
             case "pack" -> requestPack(player);
             case "jukebox" -> jukeboxes.give(player);
+            case "orchestra" -> orchestra(player, args);
             case "history" -> history(player);
             case "playlist" -> playlist(player, args);
             case "analyze" -> analyze(player, args);
@@ -172,6 +176,35 @@ public final class MusicCommand implements CommandExecutor, TabCompleter {
     private void requestPack(Player player) {
         if (enhancedAudio.request(player)) player.sendMessage(ChatColor.AQUA + "Requested the MidiBlock enhanced audio pack.");
         else player.sendMessage(ChatColor.YELLOW + "Enhanced audio is not configured on this server; native note-block audio is active.");
+    }
+
+    private void orchestra(Player player, String[] args) {
+        if (!player.hasPermission("midiblock.admin")) {
+            player.sendMessage(ChatColor.RED + "You do not have permission to tune the orchestra.");
+            return;
+        }
+        if (args.length < 2 || args[1].equalsIgnoreCase("list")) {
+            player.sendMessage(ChatColor.GOLD + "Balanced orchestra: " + ChatColor.GRAY + orchestra.entries().stream().map(OrchestraProfile.Entry::id).reduce((a, b) -> a + ", " + b).orElse("empty"));
+            player.sendMessage(ChatColor.DARK_GRAY + "Use /music orchestra audition <id> [midi-note]");
+            return;
+        }
+        if (!args[1].equalsIgnoreCase("audition") || args.length < 3) {
+            player.sendMessage(ChatColor.RED + "Usage: /music orchestra audition <id> [midi-note]");
+            return;
+        }
+        int midi = 60;
+        if (args.length >= 4) try {
+            midi = Math.clamp(Integer.parseInt(args[3]), 0, 127);
+        } catch (NumberFormatException exception) {
+            player.sendMessage(ChatColor.RED + "MIDI note must be 0 through 127.");
+            return;
+        }
+        final int note = midi;
+        orchestra.find(args[2]).ifPresentOrElse(entry -> {
+            float pitch = (float) Math.pow(2.0D, (note - entry.baseMidi()) / 12.0D);
+            player.playSound(player.getLocation(), entry.soundKey(), 1.0F, Math.clamp(pitch, 0.5F, 2.0F));
+            player.sendMessage(ChatColor.AQUA + "Audition: " + entry.id() + ChatColor.GRAY + " at MIDI " + note);
+        }, () -> player.sendMessage(ChatColor.RED + "Unknown orchestra sound. Use /music orchestra list."));
     }
 
     private void analyze(Player player, String[] args) {

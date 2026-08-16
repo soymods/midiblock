@@ -55,6 +55,12 @@ The current plugin includes:
 - Players who accept the configured enhanced-audio pack receive custom `midiblock:` instrument and percussion sounds instead.
 - The resource-pack template defines the sample layout without bundling unlicensed audio assets.
 
+### Vanilla Orchestra
+
+- The default balanced orchestra uses curated, locally available vanilla sound events to extend melodic coverage beyond the note-block palette.
+- Each MIDI part selects one coherent source by instrument role and safe pitch fit, rather than switching sounds for every note.
+- Administrators can use `/music orchestra list` and `/music orchestra audition <id> [midi-note]` to tune the palette by ear.
+
 ## Controls And Commands
 
 ```text
