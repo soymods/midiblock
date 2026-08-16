@@ -1,0 +1,46 @@
+# MidiBlock keeps original .mid/.midi source files in plugins/MidiBlock/songs.
+# Compiled playback plans will eventually be stored in plugins/MidiBlock/cache.
+playback:
+  default-volume: 0.70
+  max-voices-per-player: 48
+  # Hard cap on MIDI controller/note events handled for one player in a server tick.
+  max-events-per-tick: 512
+  trailing-silence-millis: 1000
+  pitch-bend-range-semitones: 2.0
+  # Native note blocks cannot truly sustain. This gently re-triggers held notes while pedal is down.
+  sustain-refresh-millis: 350
+  # Native Minecraft playback is server-tick-bound (20 Hz).
+  # Future enhanced playback can use the same compiled song plan.
+  mode: NOTE_BLOCK_AUTHENTIC
+
+library:
+  recursive-folders: true
+  accepted-extensions: [mid, midi]
+
+# Cache files are automatic and safe to delete; they are rebuilt from source MIDI files.
+compiler:
+  cache-format: MBC1
+
+# Optional per-song overrides live alongside the MIDI as <song>.song.yml.
+# channels are zero-based MIDI channel numbers; channel 9 is percussion.
+# Example:
+# transpose: 0
+# channels:
+#   "0":
+#     transpose: -12
+#     sound: GUITAR
+
+ui:
+  title: "MidiBlock"
+  songs-per-page: 45
+
+# Optional high-fidelity layer. Keep disabled until the pack ZIP is hosted over HTTP(S).
+# Players who decline always receive the native note-block arrangement instead.
+enhanced-audio:
+  enabled: false
+  auto-request: true
+  required: false
+  resource-pack:
+    url: ""
+    sha1: ""
+    prompt: "MidiBlock offers an optional high-fidelity instrument pack."

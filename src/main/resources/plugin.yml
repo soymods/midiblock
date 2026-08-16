@@ -1,0 +1,27 @@
+name: MidiBlock
+version: '${version}'
+main: dev.ryder.midiblock.MidiBlockPlugin
+description: Play MIDI songs with Minecraft note-block sounds.
+api-version: '1.21'
+authors: [Ryder]
+commands:
+  music:
+    description: Open and control the MidiBlock player.
+    usage: /music [list|play|stop|pause|resume|volume|pack|history|playlist|analyze|reload]
+    aliases: [midiblock, mb]
+permissions:
+  midiblock.use:
+    description: Use the MidiBlock player.
+    default: true
+  midiblock.admin:
+    description: Reload the MidiBlock library and configuration.
+    default: op
+  midiblock.play.others:
+    description: Play music for another player.
+    default: op
+  midiblock.play.radius:
+    description: Play music to players in a radius.
+    default: op
+  midiblock.play.global:
+    description: Play music for every online player.
+    default: op
